@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Map Test</title>
+
+    <!-- Mapbox CSS -->
+    <style>
+        #mapPane {
+            height: 100vh; /* Fullscreen height */
+            width: 100%;   /* Fullscreen width */
+        }
+    </style>
+</head>
+<body>
+    <div id="mapPane"></div>
+
+    <!-- Mapbox JS -->
+    <script>
+        // Set Mapbox Access Token
+        mapboxgl.accessToken = 'pk.eyJ1IjoiMHprZ2FudHoiLCJhIjoiY200cWljeHFiMTY2ejJpcHptd3lvMmEzZyJ9.vdYtKYEHJtosd9a6NbfhZQ';
+
+        // Initialize Mapbox Map
+        const map = new mapboxgl.Map({
+            container: 'mapPane', // ID of the container div
+            style: 'mapbox://styles/0zkgantz/cm4qlsaoe006r01sufo47aps3', // Your custom style URL
+            center: [144.9631, -37.8136], // Default center coordinates (longitude, latitude)
+            zoom: 12 // Default zoom level
+        });
+    </script>
+</body>
+</html>

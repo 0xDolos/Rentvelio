@@ -211,11 +211,64 @@ document.addEventListener('DOMContentLoaded', function () {
     // Initialize the Mapbox map
     const map = new mapboxgl.Map({
         container: 'map', // ID of the map container div
-        style: 'mapbox://styles/mapbox/streets-v11', // Map style
-        center: [144.9631, -37.8136], // Coordinates for the default center (example: Melbourne, AU)
-        zoom: 12 // Default zoom level
+        style: 'mapbox://styles/0zkgantz/cm4qlsaoe006r01sufo47aps3', // Map style
+        center: [151.2093, -33.8688], // Coordinates for the default center (example: Melbourne, AU)
+        zoom: 14 // Default zoom level
     });
+
+    // Try to fetch the user's location and update the map center
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const userLongitude = position.coords.longitude;
+                const userLatitude = position.coords.latitude;
+
+                // Center the map on the user's location
+                map.setCenter([userLongitude, userLatitude]);
+                map.setZoom(14); // Adjust zoom level for city view
+            },
+            (error) => {
+                console.warn('Geolocation failed or denied. Using fallback location.');
+                console.error(error);
+                // Map will stay at the fallback location
+            }
+        );
+    } else {
+        console.warn('Geolocation is not supported by this browser.');
+        // Map will stay at the fallback location
+    }
 
     // Add zoom and rotation controls to the map
     map.addControl(new mapboxgl.NavigationControl());
+    
+    // Handle search submission
+    document.querySelector('#searchPane form').addEventListener('submit', async function (event) {
+        event.preventDefault(); // Prevent form submission
+
+        const query = document.querySelector('#location').value.trim();
+
+        if (query) {
+            try {
+                // Geocoding API request
+                const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${mapboxgl.accessToken}&country=AU`);            const data = await response.json();
+
+                if (data.features && data.features.length > 0) {
+                    const [longitude, latitude] = data.features[0].center;
+
+                    // Fly to the searched location
+                    map.flyTo({
+                        center: [longitude, latitude],
+                        zoom: 14 // Adjust zoom level as needed
+                    });
+                } else {
+                    alert('No results found. Try searching for a different suburb.');
+                }
+            } catch (error) {
+                console.error('Error fetching location data:', error);
+                alert('An error occurred while searching. Please try again later.');
+            }
+        } else {
+            alert('Please enter a suburb to search.');
+        }
+    });
 });
