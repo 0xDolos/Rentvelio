@@ -226,19 +226,85 @@ input[type="range"]::-webkit-slider-runnable-track {
     height: 100%;
 }
 
+/* Listings Pane */
 #listingsPane {
-    flex: 1;
-    padding: 20px;
-    background-color: #f9f9f9;
-    overflow-y: auto;
+    display: flex;
+    flex: 0 0 800px;
+    flex-wrap: wrap; /* Allow cards to wrap to the next row */
+    row-gap: 0px;
+    column-gap: 20px;
+    justify-content: flex-start; /* Align cards to the left */
+    padding: 20px; /* Add padding around the listings */
+    box-sizing: border-box;
 }
 
-.listing {
-    padding: 10px;
+/* Listing Card */
+.listing-card {
+    flex: 0 0 calc(50% - 20px); /* Take 50% of the width, minus gap spacing */
+    max-width: calc(50% - 20px); /* Ensure the max width matches */
+    height: 330px;
+    box-sizing: border-box;
+    background-color: #fff;
     border: 1px solid #ccc;
-    background-color: #ffffff;
-    font-size: 0.9em;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0;
+    padding: 0;
+}
+
+/* Listing Image */
+.listing-image {
+    width: 100%;
+    height: 200px; /* Fixed height for images */
+    object-fit: cover; /* Maintain aspect ratio, crop if necessary */
+}
+
+/* Listing Details */
+.listing-details {
+    padding: 10px;
+    font-family: Arial, sans-serif;
+}
+
+/* Address Styling */
+.listing-address {
+    font-size: 1em;
+    font-weight: bold;
+    margin: 5px 0;
+    color: #333;
+}
+
+/* Prices Container */
+.listing-prices {
+    display: flex;
+    gap: 5px; /* Add spacing between price items */
+    margin-top: 10px;
+}
+
+/* Individual Price Item */
+
+.price-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f4f4f4;
     border-radius: 4px;
+    padding: 10px;
+    width: 70px; /* Fixed width for consistency */
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.price-item span:first-child {
+    display: block;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.price-item span:last-child {
+    font-size: 1em;
+    font-weight: bold;
+    color: #000;
 }
 
 /* Filter Options */
