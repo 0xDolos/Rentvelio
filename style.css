@@ -216,9 +216,9 @@ input[type="range"]::-webkit-slider-runnable-track {
 }
 
 #mapPane {
-    flex: 2;
+    flex: 1;
     position: relative;
-    height: 100%;
+    height: 100vh;
 }
 
 #map {
@@ -229,28 +229,46 @@ input[type="range"]::-webkit-slider-runnable-track {
 /* Listings Pane */
 #listingsPane {
     display: flex;
-    flex: 0 0 800px;
-    flex-wrap: wrap; /* Allow cards to wrap to the next row */
-    row-gap: 0px;
+    flex-wrap: wrap; /* Allow cards to wrap */
+    row-gap: 20px;
     column-gap: 20px;
-    justify-content: flex-start; /* Align cards to the left */
-    padding: 20px; /* Add padding around the listings */
+    justify-content: flex-start;
+    padding: 20px;
     box-sizing: border-box;
+    flex: 1; /* Allow the listings pane to adjust */
+    max-width: 400px; /* Default max width for larger screens */
+    max-height: 330px;
 }
 
 /* Listing Card */
 .listing-card {
-    flex: 0 0 calc(50% - 20px); /* Take 50% of the width, minus gap spacing */
-    max-width: calc(50% - 20px); /* Ensure the max width matches */
-    height: 330px;
+    flex: 0 0 calc(100% - 20px); /* Default to full width for smaller screens */
+    max-width: calc(100% - 20px);
+    height: auto;
     box-sizing: border-box;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 0;
-    padding: 0;
+}
+
+/* Adjust layout for wider screens */
+@media (min-width: 768px) {
+    #listingsPane {
+        max-width: 450px; /* Increase the width slightly for medium screens */
+    }
+
+    .listing-card {
+        flex: 0 0 calc(50% - 20px); /* Two cards per row */
+        max-width: calc(50% - 20px);
+    }
+}
+
+@media (min-width: 1200px) {
+    #listingsPane {
+        max-width: 35%; /* Make the listings pane 35% of the screen width */
+    }
 }
 
 /* Listing Image */
