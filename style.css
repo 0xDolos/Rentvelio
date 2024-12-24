@@ -305,3 +305,59 @@ input[type="range"]::-webkit-slider-runnable-track {
     height: 20px; /* Increase checkbox size */
     cursor: pointer;
 }
+
+/* Suggestions List Styling */
+#suggestions {
+    position: absolute;
+    top: 100%; /* Place directly below the search bar */
+    left: 0;
+    width: auto; /* Change this to auto to prevent full-page width */
+    max-width: 100%; /* Match the width of the input field */
+    min-width: 400px; /* Ensure a reasonable minimum width */
+    max-height: 200px; /* Limit the height of the dropdown */
+    overflow-y: auto; /* Add scroll if suggestions overflow */
+    background-color: #ffffff; /* White background */
+    border: 1px solid #ccc; /* Border around the dropdown */
+    border-radius: 4px; /* Rounded corners */
+    z-index: 1000; /* Ensure it appears above other elements */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}
+
+/* Suggestion Items */
+#suggestions li {
+    display: flex; /* Use flexbox to align items */
+    justify-content: space-between; /* Space out suburb and postcode */
+    align-items: center; /* Vertically align text */
+    padding: 10px;
+    font-size: 1em;
+    color: #333;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    border-bottom: 1px solid #f4f4f4; /* Add a subtle divider between items */
+}
+
+/* Suburb Name and Postcode Styling */
+#suggestions li span {
+    flex: 1; /* Allow spans to grow */
+}
+
+/* Styling for the Postcode */
+#suggestions li span.postcode {
+    text-align: right; /* Align postcode to the right */
+    font-weight: bold; /* Make postcode bold */
+    color: #555; /* Subtle color for postcode */
+}
+
+/* Hover Effect on Suggestion Items */
+#suggestions li:hover {
+    background-color: #f4f4f4; /* Light grey on hover */
+}
+
+/* Active Suggestion */
+#suggestions li.active {
+    background-color: #007BFF; /* Highlight active suggestion */
+    color: #ffffff; /* White text for active item */
+}

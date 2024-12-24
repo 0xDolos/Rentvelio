@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const homeTypeDropdown = document.getElementById('homeTypeDropdown');
     const applyHomeType = document.getElementById('applyHomeType');
     const homeTypeCheckboxes = document.querySelectorAll('input[name="homeType"]');
+    const suggestionsList = document.getElementById('suggestions'); // Added for dynamic suggestions
+    const locationInput = document.getElementById('location');
 
     const defaultMin = 0; // Default minimum price
     const defaultMax = 2000; // Default maximum price
@@ -216,59 +218,146 @@ document.addEventListener('DOMContentLoaded', function () {
         zoom: 14 // Default zoom level
     });
 
-    // Try to fetch the user's location and update the map center
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const userLongitude = position.coords.longitude;
-                const userLatitude = position.coords.latitude;
-
-                // Center the map on the user's location
-                map.setCenter([userLongitude, userLatitude]);
-                map.setZoom(14); // Adjust zoom level for city view
-            },
-            (error) => {
-                console.warn('Geolocation failed or denied. Using fallback location.');
-                console.error(error);
-                // Map will stay at the fallback location
-            }
-        );
-    } else {
-        console.warn('Geolocation is not supported by this browser.');
-        // Map will stay at the fallback location
-    }
-
     // Add zoom and rotation controls to the map
     map.addControl(new mapboxgl.NavigationControl());
     
-    // Handle search submission
-    document.querySelector('#searchPane form').addEventListener('submit', async function (event) {
-        event.preventDefault(); // Prevent form submission
+    // Suggestions Logic
+    let activeSuggestionIndex = -1; // Track active suggestion
+    const searchButton = document.querySelector('#searchButton'); // Reference to search button
 
-        const query = document.querySelector('#location').value.trim();
+    locationInput.addEventListener('input', async function () {
+        const query = locationInput.value.trim();
 
-        if (query) {
+        if (query.length > 2) { // Trigger suggestions for more than 2 characters
             try {
-                // Geocoding API request
-                const response = await fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?access_token=${mapboxgl.accessToken}&country=AU`);            const data = await response.json();
+                const response = await fetch(
+                    `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(query)}.json?country=au&types=locality,place&access_token=pk.eyJ1IjoiMHprZ2FudHoiLCJhIjoiY200cWljeHFiMTY2ejJpcHptd3lvMmEzZyJ9.vdYtKYEHJtosd9a6NbfhZQ`
+                );
+                const data = await response.json();
+
+                suggestionsList.innerHTML = ''; // Clear existing suggestions
+                activeSuggestionIndex = -1; // Reset active suggestion
 
                 if (data.features && data.features.length > 0) {
-                    const [longitude, latitude] = data.features[0].center;
+                    data.features.forEach((feature, index) => {
+                        // Extract necessary information
+                        const suburb = feature.text || "Unknown Suburb";
+                        const state = feature.context
+                            ? feature.context.find((c) => c.id.includes("region"))?.short_code?.split("-")[1].toUpperCase() || "Unknown State"
+                            : "Unknown State"; // Extract state abbreviation
 
-                    // Fly to the searched location
-                    map.flyTo({
-                        center: [longitude, latitude],
-                        zoom: 14 // Adjust zoom level as needed
+                        // Create suggestion item
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                            <span>${suburb}, ${state}</span>
+                        `;
+
+                        // Add click functionality to select the suggestion and trigger search
+                        li.addEventListener('click', () => {
+                            locationInput.value = `${suburb}, ${state}`;
+                            suggestionsList.innerHTML = ''; // Clear suggestions on selection
+                            triggerSearch(); // Trigger the search automatically
+                        });
+
+                        // Append the suggestion item
+                        suggestionsList.appendChild(li);
                     });
                 } else {
-                    alert('No results found. Try searching for a different suburb.');
+                    suggestionsList.innerHTML = '<li>No suggestions found</li>';
                 }
             } catch (error) {
-                console.error('Error fetching location data:', error);
-                alert('An error occurred while searching. Please try again later.');
+                console.error('Error fetching suggestions:', error);
+                suggestionsList.innerHTML = '<li>Error fetching suggestions</li>';
             }
         } else {
-            alert('Please enter a suburb to search.');
+            suggestionsList.innerHTML = ''; // Clear suggestions if query length is short
+        }
+    });
+
+    // Handle keyboard navigation
+    locationInput.addEventListener('keydown', function (event) {
+        const suggestions = suggestionsList.querySelectorAll('li');
+
+        if (event.key === 'ArrowDown') {
+            // Move down in the list
+            if (suggestions.length > 0) {
+                if (activeSuggestionIndex < suggestions.length - 1) {
+                    activeSuggestionIndex++;
+                }
+                updateActiveSuggestion(suggestions);
+            }
+            event.preventDefault(); // Prevent default cursor movement
+        } else if (event.key === 'ArrowUp') {
+            // Move up in the list
+            if (suggestions.length > 0) {
+                if (activeSuggestionIndex > 0) {
+                    activeSuggestionIndex--;
+                }
+                updateActiveSuggestion(suggestions);
+            }
+            event.preventDefault(); // Prevent default cursor movement
+        } else if (event.key === 'Enter') {
+            // Select the active suggestion and trigger search
+            if (activeSuggestionIndex >= 0 && activeSuggestionIndex < suggestions.length) {
+                suggestions[activeSuggestionIndex].click(); // Simulate a click on the active suggestion
+            } else {
+                triggerSearch(); // Trigger search if no suggestion is active
+            }
+            event.preventDefault(); // Prevent form submission
+        }
+    });
+
+    // Update the active suggestion style
+    function updateActiveSuggestion(suggestions) {
+        suggestions.forEach((item, index) => {
+            if (index === activeSuggestionIndex) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+    }
+
+    // Trigger search functionality
+    function triggerSearch() {
+        const query = locationInput.value.trim();
+
+        if (query) {
+            // Example search functionality: Update the map
+            console.log(`Searching for: ${query}`);
+            // Trigger your search logic here (e.g., Mapbox API or other functionality)
+        } else {
+            console.warn('No query to search.');
+        }
+    }
+
+    // Handle search submission
+    document.querySelector('#searchPane form').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const query = locationInput.value.trim();
+        if (query) {
+            try {
+                const response = await fetch(`https://api.mapbox.com/search/geocode/v6/forward?q=${encodeURIComponent(query)}&country=au&proximity=ip&types=locality,place,postcode&access_token=pk.eyJ1IjoiMHprZ2FudHoiLCJhIjoiY200cWljeHFiMTY2ejJpcHptd3lvMmEzZyJ9.vdYtKYEHJtosd9a6NbfhZQ`);
+                const data = await response.json();
+
+                if (data.features && data.features.length > 0) {
+                    const [longitude, latitude] = data.features[0].geometry.coordinates;
+                    const map = new mapboxgl.Map({
+                        container: 'map',
+                        style: 'mapbox://styles/0zkgantz/cm4qlsaoe006r01sufo47aps3',
+                        center: [longitude, latitude],
+                        zoom: 14
+                    });
+                } else {
+                    alert('No results found for the search query.');
+                }
+            } catch (error) {
+                console.error('Error during search:', error);
+                alert('An error occurred while performing the search.');
+            }
+        } else {
+            alert('Please enter a valid suburb name.');
         }
     });
 });
