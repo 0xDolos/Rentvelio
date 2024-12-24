@@ -253,7 +253,7 @@ input[type="range"]::-webkit-slider-runnable-track {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Adjust layout for wider screens */
+/* Wider screens */
 @media (min-width: 768px) {
     #listingsPane {
         max-width: 450px; /* Increase the width slightly for medium screens */
@@ -268,6 +268,19 @@ input[type="range"]::-webkit-slider-runnable-track {
 @media (min-width: 1200px) {
     #listingsPane {
         max-width: 35%; /* Make the listings pane 35% of the screen width */
+    }
+}
+
+/* Small Screens (Vertical Orientation or Phones) */
+@media (max-width: 768px) {
+    #listingsPane {
+        flex: 1;
+        max-width: 100%; /* Full width for smaller screens */
+    }
+
+    .listing-card {
+        flex: 0 0 calc(100% - 20px); /* Ensure 1 card per row */
+        max-width: calc(100% - 20px);
     }
 }
 
