@@ -9,23 +9,28 @@ html, body {
 
 /* Header */
 header {
-    height: 80px;
-    background-color: #f4f4f4;
+    height: 50px;
+    background-color: #ffffff;
     text-align: center;
     padding: 20px;
     border-bottom: 1px solid #ccc;
 }
 
 header h1 {
+    all: unset;
     margin: 0;
-    font-size: 2em;
-    color: #333;
+    font-size: 2.4em;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #007BFF;
+    font-family: sans-serif;
 }
 
 header p {
     margin: 0;
-    font-size: 1.2em;
-    color: #555;
+    font-size: 1em;
+    color: #000000;
+    font-family: Arial;
 }
 
 /* Search Pane */
@@ -226,6 +231,13 @@ input[type="range"]::-webkit-slider-runnable-track {
     height: 100%;
 }
 
+.mapboxgl-ctrl-bottom {
+    position: absolute;
+    bottom: 20px; /* Adjust this value to move buttons further up or down */
+    right: 10px; /* Adjust this value to move buttons left or right */
+    z-index: 999; /* Ensure they appear above other elements */
+}
+
 /* Listings Pane */
 #listingsPane {
     display: flex;
@@ -253,10 +265,10 @@ input[type="range"]::-webkit-slider-runnable-track {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Wider screens */
+/* Wider screens (Two cards per row by default) */
 @media (min-width: 768px) {
     #listingsPane {
-        max-width: 450px; /* Increase the width slightly for medium screens */
+        max-width: 450px; /* Slightly larger listings pane for medium screens */
     }
 
     .listing-card {
@@ -265,9 +277,15 @@ input[type="range"]::-webkit-slider-runnable-track {
     }
 }
 
+/* Larger screens (like desktops or horizontal monitors) */
 @media (min-width: 1200px) {
     #listingsPane {
-        max-width: 35%; /* Make the listings pane 35% of the screen width */
+        max-width: 35%; /* Listings pane takes 35% of the screen width */
+    }
+
+    .listing-card {
+        flex: 0 0 calc(50% - 20px); /* Two cards per row */
+        max-width: calc(50% - 20px);
     }
 }
 
@@ -276,6 +294,28 @@ input[type="range"]::-webkit-slider-runnable-track {
     #listingsPane {
         flex: 1;
         max-width: 100%; /* Full width for smaller screens */
+    }
+
+    .listing-card {
+        flex: 0 0 calc(100% - 20px); /* Ensure 1 card per row */
+        max-width: calc(100% - 20px);
+    }
+
+    #mapPane {
+        display: none; /* Hide map on mobile devices */
+    }
+}
+
+/* Vertical Monitors or Smaller Desktop Screens */
+@media (max-width: 1200px) {
+    #listingsPane {
+        flex: 0 0 30%; /* Listings pane takes 30% of the screen width */
+        max-width: 30%; /* Ensure listings pane is capped at 30% */
+    }
+
+    #mapPane {
+        flex: 0 0 70%; /* Map takes up 70% of the screen width */
+        max-width: 70%; /* Ensure map pane is capped at 70% */
     }
 
     .listing-card {

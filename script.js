@@ -218,8 +218,47 @@ document.addEventListener('DOMContentLoaded', function () {
         zoom: 14 // Default zoom level
     });
 
+    // Example GeoJSON data
+    const geojson = {
+        type: 'FeatureCollection',
+        features: [
+            {
+                type: 'Feature',
+                geometry: {
+                    type: 'Point',
+                    coordinates: [151.2093, -33.8688]
+                },
+                properties: {
+                    message: 'Sydney!!!',
+                    imageId: 10,
+                    iconSize: [50, 50]
+                }
+            },
+        ]
+    };
+
+    // Add custom markers to the map
+    for (const marker of geojson.features) {
+        const el = document.createElement('div');
+        const width = marker.properties.iconSize[0];
+        const height = marker.properties.iconSize[1];
+        el.className = 'marker';
+        el.style.backgroundImage = `url('./assets/markers/marker.png')`;
+        el.style.width = `${width}px`;
+        el.style.height = `${height}px`;
+        el.style.backgroundSize = '100%';
+
+        el.addEventListener('click', () => {
+            alert(marker.properties.message);
+        });
+
+        new mapboxgl.Marker(el)
+            .setLngLat(marker.geometry.coordinates)
+            .addTo(map);
+    }
+
     // Add zoom and rotation controls to the map
-    map.addControl(new mapboxgl.NavigationControl());
+    map.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
     
     // Suggestions Logic
     let activeSuggestionIndex = -1; // Track active suggestion
