@@ -1,0 +1,127 @@
+.submission-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.submission-form {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.submission-form h2 {
+  margin-bottom: 2rem;
+  text-align: center;
+  color: #333;
+}
+
+.submission-form h3 {
+  margin: 1.5rem 0 1rem;
+  color: #444;
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+.submission-error {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #fee2e2;
+  color: #dc2626;
+  border-radius: 4px;
+}
+
+/* Input Styles */
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="date"],
+.form-group select {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* Checkbox Container */
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+}
+
+/* Submit Button */
+.submission-button {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.submission-button:hover {
+  background-color: #1d4ed8;
+}
+
+.submission-button:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}
+
+/* Checkbox Layout */
+.form-group label input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+/* Focus States */
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.address-input-container {
+  position: relative;
+  width: 100%;
+}
+
+.address-suggestions {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.address-suggestions li {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid #eee;
+}
+
+.address-suggestions li:last-child {
+  border-bottom: none;
+}
+
+.address-suggestions li:hover,
+.address-suggestions li.selected {
+  background-color: #f5f5f5;
+}

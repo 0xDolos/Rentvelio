@@ -1,0 +1,110 @@
+#searchPane {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #ccc;
+}
+
+#searchPane form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+#searchPane input[type="text"] {
+  width: 100%; /* Fill search container */
+  height: 40px;
+  padding: 0 15px;
+  font-size: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Adjust dropdown buttons to match original design */
+.dropdown-btn {
+  height: 40px;
+  min-width: 100px;
+  white-space: nowrap;
+  background-color: #f4f4f4;
+}
+
+/* Search button styling */
+#searchPane input[type="submit"] {
+  height: 40px;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 0 30px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.search-container {
+  position: relative;
+  width: 400px; /* Wider search container */
+  margin-right: 30px; /* Add gap before buttons */
+  z-index: 1000;
+}
+
+#suggestions {
+  position: absolute;
+  top: 80%;
+  left: 0;
+  width: 430px; /* Match search container width */
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-height: 300px;
+  padding: 0;
+  overflow-y: auto;
+  z-index: 1001;
+}
+
+.suggestion-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.suggestion-item:hover,
+.suggestion-item.active {
+  background-color: #cce5ff;
+}
+
+.suggestion-item span {
+  flex: 1;
+}
+
+.suggestion-content span {
+  display: block;
+}
+
+.suggestion-header {
+  display: flex;
+  align-items: center;
+  color: #666;
+  font-size: 14px;
+  padding: 16px 24px;
+  width: 0;
+  margin: 0;
+  letter-spacing: 0.5px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #eee;
+}
+
+.suggestion-header .location-icon {
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.suggestion-item .location-icon {
+  display: none;
+}

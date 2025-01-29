@@ -1,0 +1,131 @@
+.listing-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+.listing-modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1001;
+  width: 100%;
+  pointer-events: none;
+}
+
+.listing-modal {
+  background: white;
+  width: 100%;
+  max-width: 750px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  max-height: 90vh;
+  overflow-y: auto;
+  pointer-events: auto;
+}
+
+.listing-modal-header {
+  position: relative;
+  height: 300px;
+}
+
+.listing-modal-header img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.listing-modal-back-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+}
+
+.listing-modal-back-button:hover {
+  background-color: #f3f4f6;
+}
+
+.listing-modal-content {
+  padding: 1.5rem;
+}
+
+.listing-modal-address {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.listing-modal-prices {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.price-tag {
+  background-color: #f0f7ff;
+  padding: 0.75rem 1rem;
+  border-radius: 6px;
+}
+
+.price-tag span {
+  display: block;
+  color: #4b5563;
+  font-size: 0.875rem;
+}
+
+.price-tag p {
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: #1a1a1a;
+  margin-top: 0.25rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.feature-section h3 {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.feature-list {
+  list-style: none;
+  padding: 0;
+}
+
+.feature-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: #4b5563;
+}
+
+.feature-list li::before {
+  content: "•";
+  color: #2563eb;
+}

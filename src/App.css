@@ -1,0 +1,12 @@
+/* src/styles/App.css */
+.App {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#container {
+  display: flex;
+  flex: 1;
+  height: calc(100vh - 130px); /* Account for header and search pane */
+}

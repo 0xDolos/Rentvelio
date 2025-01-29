@@ -1,0 +1,129 @@
+#listingsPane {
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 20px;
+  column-gap: 20px;
+  justify-content: flex-start;
+  padding: 20px;
+  box-sizing: border-box;
+  flex: 1;
+  max-width: 400px;
+  max-height: 330px;
+}
+
+.listing-card {
+  flex: 0 0 calc(100% - 20px);
+  max-width: calc(100% - 20px);
+  height: auto;
+  box-sizing: border-box;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.listing-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.listing-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.listing-details {
+  padding: 10px;
+  font-family: Arial, sans-serif;
+}
+
+.listing-address {
+  font-size: 1em;
+  font-weight: bold;
+  margin: 5px 0;
+  color: #333;
+}
+
+.listing-prices {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.price-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f4f4f4;
+  border-radius: 4px;
+  padding: 10px;
+  width: 70px;
+  font-size: 0.9em;
+  text-align: center;
+}
+
+.price-item span:first-child {
+  display: block;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.price-item span:last-child {
+  font-size: 1em;
+  font-weight: bold;
+  color: #000;
+}
+
+/* Wider screens */
+@media (min-width: 768px) {
+  #listingsPane {
+    max-width: 450px;
+  }
+
+  .listing-card {
+    flex: 0 0 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+  }
+}
+
+/* Larger screens */
+@media (min-width: 1200px) {
+  #listingsPane {
+    max-width: 35%;
+  }
+
+  .listing-card {
+    flex: 0 0 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+  }
+}
+
+/* Vertical Monitors */
+@media (max-width: 1200px) {
+  #listingsPane {
+    flex: 0 0 30%;
+    max-width: 30%;
+  }
+
+  .listing-card {
+    flex: 0 0 calc(100% - 20px);
+    max-width: calc(100% - 20px);
+  }
+}
+
+/* Small Screens */
+@media (max-width: 768px) {
+  #listingsPane {
+    flex: 1;
+    max-width: 100%;
+  }
+
+  .listing-card {
+    flex: 0 0 calc(100% - 20px);
+    max-width: calc(100% - 20px);
+  }
+}
